@@ -3,7 +3,7 @@ import introJs from 'intro.js';
 import 'intro.js/introjs.css';
 
 import { ButtonLink } from '../buttonLink';
-import './index';
+import './HomePage.css'
 
 const Home = () => {
 	const setupIntro = () => {

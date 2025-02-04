@@ -1,8 +1,12 @@
 #root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    
     text-align: center;
+    background: rgb(131,74,161);
+    background: linear-gradient(150deg, rgba(131,74,161,1) 9%, rgba(40,23,84,1) 70%, rgba(12,8,45,1) 100%);
   }
   *{
     font-family: Jost;
