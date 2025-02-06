@@ -42,9 +42,11 @@
     0% {
         box-shadow: 0 0 0 0 #1cb81c;
     }
+
     70% {
         box-shadow: 0 0 0 50px var(--shadow-color);
     }
+
     100% {
         box-shadow: 0 0 0 0 var(--shadow-color);
     }
@@ -62,6 +64,7 @@
         font-size: 1rem;
         width: 90px;
     }
+
     #BackButton {
         margin-top: 40px;
     }

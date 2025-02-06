@@ -1,4 +1,4 @@
-.GameModes{
+.GameModes {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,23 +13,28 @@
     opacity: 0;
     animation: fadeIn 0.5s ease-in 0.1s forwards;
 }
-.HomePage{
+
+.HomePage {
     margin-top: 90px;
 }
-.HomePage h1{
+
+.HomePage h1 {
     color: white;
     text-shadow: 2px 2px 2px rgb(92, 92, 92);
 }
-.gif{
+
+.gif {
     width: 200px;
     height: auto;
     margin-top: 20px;
 }
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
         transform: translateY(-20px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
