@@ -7,6 +7,7 @@ import User from "../models/User";
   if(!email && !password){
     return res.status(422).json({msg:'Email and Password is required'})
   }
+ 
   const userExist = await User.findOne({email:email})
 
   if (userExist) {
