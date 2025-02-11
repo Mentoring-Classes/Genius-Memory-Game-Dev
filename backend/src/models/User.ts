@@ -1,13 +1,3 @@
-/* import mongoose, {Document, Schema} from "mongoose"
-
-
-const User = mongoose.model("User",{
-    email:String,
-    password: String,
-})
-
-export default User */
-
 import mongoose, { Schema, Document } from 'mongoose';
 
 interface IUser extends Document {
