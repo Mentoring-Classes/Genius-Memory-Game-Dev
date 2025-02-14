@@ -1,6 +1,6 @@
 import User from "../models/User";
-
-export const getUser = async (req: any, res: any) => {
+import { Request, Response } from "express";
+export const getUser = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {

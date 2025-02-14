@@ -1,6 +1,7 @@
 import User from "../models/User";
+import { Request, Response } from 'express';
 
-export const postUser = async (req: any, res: any) => {
+export const postUser = async (req: Request, res: Response) => {
   const { email, password } = req.body
 
   if (!email && !password) {

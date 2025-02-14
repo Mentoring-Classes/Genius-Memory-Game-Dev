@@ -1,6 +1,7 @@
 import User from '../models/User';
+import { Request, Response } from 'express';
 
-export const patchUser = async (req: any, res: any) => {
+export const patchUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const updates = req.body;

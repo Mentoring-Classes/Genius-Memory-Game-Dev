@@ -1,6 +1,7 @@
 import User from "../models/User";
+import Express from "express";
 
-export const deleteUser = async (req: any, res: any) => {
+export const deleteUser = async (req: Express.Request, res: Express.Response) => {
     try {
         const { id } = req.params;
         const user = await User.findByIdAndDelete(id);
