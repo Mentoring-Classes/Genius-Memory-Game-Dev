@@ -1,7 +1,4 @@
-import { postUser } from '../controllers/postUser';
-import { getUser } from '../controllers/getUser';
-import { deleteUser } from "../controllers/deleteUser";
-import { patchUser } from "../controllers/patchUser";
+import { postUser, getUser, deleteUser, patchUser} from '../controllers/User';
 import { Request, Response, Router } from 'express';
 
 const router = Router();
