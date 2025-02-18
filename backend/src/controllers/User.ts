@@ -1,8 +1,8 @@
 import User from "../models/User";
 import { Request, Response } from 'express';
 
-/* -------------------------postUser------------------------- */
-export const postUser = async (req: Request, res: Response) => {
+/* -------------------------post------------------------- */
+export const post = async (req: Request, res: Response) => {
   const { email, password } = req.body
 
   if (!email && !password) {
@@ -29,8 +29,8 @@ export const postUser = async (req: Request, res: Response) => {
   }
 }
 
-/*  -------------------------patchUser-------------------------  */
-export const patchUser = async (req: Request, res: Response) => {
+/*  -------------------------patch-------------------------  */
+export const patch = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
       const updates = req.body;
@@ -47,8 +47,8 @@ export const patchUser = async (req: Request, res: Response) => {
     }
   };
 
-/*  -------------------------getUser-------------------------  */
-  export const getUser = async (req: Request, res: Response) => {
+/*  -------------------------get-------------------------  */
+  export const get = async (req: Request, res: Response) => {
     const { id } = req.params;
   
     try {
@@ -66,8 +66,8 @@ export const patchUser = async (req: Request, res: Response) => {
     }
   };
   
-/* -------------------------deleteUser------------------------- */
-export const deleteUser = async (req:Request, res: Response) => {
+/* -------------------------delete------------------------- */
+export const remove = async (req:Request, res: Response) => {
     try {
         const { id } = req.params;
         const user = await User.findByIdAndDelete(id);
