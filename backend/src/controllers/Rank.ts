@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Rank from '../models/Rank';
 
 /* -------------------------POST------------------------- */
-export const postRank = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   const { userId, bestScore, rank, rankPoints, bestStreak } = req.body;
 
   try {
@@ -29,7 +29,7 @@ export const postRank = async (req: Request, res: Response) => {
 };
 
 /* -------------------------PATCH------------------------- */
-export const patchRank = async (req: Request, res: Response) => {
+export const patch = async (req: Request, res: Response) => {
   const { id } = req.params;
   const updates = req.body;
 
@@ -48,7 +48,7 @@ export const patchRank = async (req: Request, res: Response) => {
 };
 
 /* -------------------------GET------------------------- */
-export const getRank = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
@@ -66,7 +66,7 @@ export const getRank = async (req: Request, res: Response) => {
 };
 
 /* -------------------------DELETE------------------------- */
-export const removeRank = async (req: Request, res: Response) => {
+export const remove = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {

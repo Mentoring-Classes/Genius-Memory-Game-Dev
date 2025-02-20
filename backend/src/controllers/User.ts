@@ -3,7 +3,7 @@ import Rank from "../models/Rank";
 import { Request, Response } from 'express';
 
 /* -------------------------post------------------------- */
-export const postUser = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   const { email, password } = req.body
 
   if (!email && !password) {
@@ -41,7 +41,7 @@ export const postUser = async (req: Request, res: Response) => {
 }
 
 /*  -------------------------patch-------------------------  */
-export const patchUser = async (req: Request, res: Response) => {
+export const patch = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
       const updates = req.body;
@@ -59,7 +59,7 @@ export const patchUser = async (req: Request, res: Response) => {
   };
 
 /*  -------------------------get-------------------------  */
-  export const getUser = async (req: Request, res: Response) => {
+  export const get = async (req: Request, res: Response) => {
     const { id } = req.params;
   
     try {
@@ -78,7 +78,7 @@ export const patchUser = async (req: Request, res: Response) => {
   };
   
 /* -------------------------delete------------------------- */
-export const removeUser = async (req:Request, res: Response) => {
+export const remove = async (req:Request, res: Response) => {
     try {
         const { id } = req.params;
         const user = await User.findByIdAndDelete(id);
