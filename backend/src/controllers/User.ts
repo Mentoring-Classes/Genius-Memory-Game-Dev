@@ -1,4 +1,5 @@
 import User from "../models/User";
+import Rank from "../models/Rank";
 import { Request, Response } from 'express';
 
 /* -------------------------post------------------------- */
@@ -19,6 +20,16 @@ export const postUser = async (req: Request, res: Response) => {
     email: email,
     password: password
   })
+
+  const rank = new Rank({
+    userId: user._id,
+    bestScore: 0,
+    rank: "Bronze",
+    rankPoints: 0,
+    bestStreak: 0
+  });
+
+  await rank.save();
 
   try {
     await user.save()
