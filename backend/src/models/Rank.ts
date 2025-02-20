@@ -1,11 +1,11 @@
-import mongoose, { Schema, Document} from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
 interface IRank extends Document {
     userId: mongoose.Types.ObjectId;
     bestScore: number;
     rank: String;
     rankPoints: number;
-    bestStreak: number;  
+    bestStreak: number;
 }
 
 const RankSchema = new Schema<IRank>({
