@@ -21,11 +21,7 @@ export const create = async (req: Request, res: Response) => {
   })
 
   const rank = new Rank({
-    userId: user._id,
-    bestScore: 0,
-    rank: "Bronze",
-    rankPoints: 0,
-    bestStreak: 0
+    userId: [user._id],  // Associar o rank ao usuário
   });
 
   await rank.save();

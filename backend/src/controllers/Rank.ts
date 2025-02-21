@@ -11,13 +11,7 @@ export const create = async (req: Request, res: Response) => {
       return res.status(422).json({ msg: 'Rank already exists for this user' });
     }
 
-    const newRank = new Rank({
-      userId,
-      bestScore: bestScore || 0,
-      rank: rank || 'Bronze',
-      rankPoints: rankPoints || 0,
-      bestStreak: bestStreak || 0
-    });
+    const newRank = new Rank({ userId, bestScore, rank, rankPoints, bestStreak });
 
     await newRank.save();
     res.status(201).json({ msg: 'Rank saved successfully', rank: newRank });
