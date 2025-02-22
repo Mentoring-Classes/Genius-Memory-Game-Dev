@@ -2,19 +2,23 @@ import { Request, Response } from 'express';
 import Rank from '../models/Rank';
 
 export const create = async (req: Request, res: Response) => {
-  const { userId, bestScore, rank, rankPoints, bestStreak } = req.body;
+  const allRanks = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Grandmaster'];
 
   try {
-    const existingRank = await Rank.findOne({ userId });
+    for (let i = 0; i < allRanks.length; i++) {
+      const rankExist = await Rank.findOne({ rank: allRanks[i] })
 
-    if (existingRank) {
-      return res.status(422).json({ msg: 'Rank already exists for this user' });
+      if (rankExist) {
+        return res.status(422).json({ msg: `Rank ${rankExist} already exists` }); 
+      }else{
+        const newRank = new Rank({
+          rank: allRanks[i],
+          nextRank: 300 * (i + 1),
+        });
+        await newRank.save();
+      }
     }
-
-    const newRank = new Rank({ userId, bestScore, rank, rankPoints, bestStreak });
-
-    await newRank.save();
-    res.status(201).json({ msg: 'Rank saved successfully', rank: newRank });
+    res.status(201).json({ msg: 'Rank saved successfully'});
 
   } catch (error) {
     res.status(500).json({ msg: 'Error saving rank', error });

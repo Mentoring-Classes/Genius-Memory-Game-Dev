@@ -3,14 +3,18 @@ import mongoose, { Schema, Document } from "mongoose";
 interface IUser extends Document {
   email: string;
   password: string;
-  ranks: mongoose.Types.ObjectId[];  // Array de referências para os ranks
+  rankPoints: number;
+  bestScore: number;
+  rank: mongoose.Types.ObjectId;
 }
 
 const UserSchema = new Schema<IUser>({
   email: { type: String, required: true, unique: true, lowercase: true },
   password: { type: String, required: true },
-  ranks: [{ type: Schema.Types.ObjectId, ref: 'Rank' }]  // Relacionamento com Rank
+  rankPoints: { type: Number, default: 0},
+  bestScore: { type: Number, default: 0 },
+  rank: { type: Schema.Types.ObjectId, ref: 'Rank' } 
 }, { timestamps: true });
 
-const User = mongoose.model<IUser>('User', UserSchema);
-export default User;
+export default mongoose.model<IUser>('User', UserSchema);
+

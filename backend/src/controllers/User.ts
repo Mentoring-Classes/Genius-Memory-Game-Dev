@@ -14,17 +14,13 @@ export const create = async (req: Request, res: Response) => {
   if (userExist) {
     return res.status(422).json({ msg: 'Email already exists' })
   }
+  const defaultRank = await Rank.findOne({ rank: "Bronze" });
 
   const user = new User({
     email: email,
-    password: password
-  })
-
-  const rank = new Rank({
-    userId: [user._id],  // Associar o rank ao usuário
+    password: password,
+    rank: defaultRank?._id 
   });
-
-  await rank.save();
 
   try {
     await user.save()
@@ -41,6 +37,8 @@ export const patch = async (req: Request, res: Response) => {
     const updates = req.body;
 
     const updatedUser = await User.findByIdAndUpdate(id, updates, { new: true });
+    const findRank = await Rank.findOne({ rank: updates.rank });
+
 
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
