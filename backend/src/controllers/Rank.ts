@@ -13,7 +13,8 @@ export const create = async (req: Request, res: Response) => {
       }else{
         const newRank = new Rank({
           rank: allRanks[i],
-          nextRank: 300 * (i + 1),
+          requiredPoints: 300 * (i + 1),
+          nextRank:allRanks[i + 1]
         });
         await newRank.save();
       }

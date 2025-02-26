@@ -2,12 +2,14 @@ import mongoose, { Schema, Document } from "mongoose";
 
 interface IRank extends Document {
   rank: string;
-  nextRank: number;
+  nextRank: string;
+  requiredPoints: number
 }
 
 const RankSchema = new Schema<IRank>({
   rank: { type: String },
-  nextRank: { type: Number, default: 300 },
+  requiredPoints: { type: Number, default: 300 },
+  nextRank: { type: String }
 }, { timestamps: true });
 
 const Rank = mongoose.model<IRank>('Rank', RankSchema);

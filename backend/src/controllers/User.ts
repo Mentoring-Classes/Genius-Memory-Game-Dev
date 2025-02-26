@@ -24,7 +24,7 @@ export const create = async (req: Request, res: Response) => {
 
   try {
     await user.save()
-    res.status(201).json({ msg: 'Save' })
+    res.status(201).json({ msg: 'Save',user: user })
 
   } catch (error) {
     res.status(500).json({ msg: "Error" })
@@ -32,18 +32,28 @@ export const create = async (req: Request, res: Response) => {
 }
 
 export const patch = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
+  const { id } = req.params;
     const updates = req.body;
 
     const updatedUser = await User.findByIdAndUpdate(id, updates, { new: true });
-    const findRank = await Rank.findOne({ rank: updates.rank });
-
 
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
     }
 
+    const findUserRank = await Rank.findById(updatedUser.rank);
+    console.log(findUserRank);
+
+    if (!findUserRank) {
+      return res.status(404).json({ message: 'Rank not found' });
+    }
+    if (updatedUser.rankPoints >= findUserRank.requiredPoints) {
+      const newRank = await Rank.findOne({ rank: findUserRank?.nextRank });
+      await updatedUser.updateOne({ rank: newRank?._id });
+    }
+    
+  try {
+    await updatedUser.save()
     res.json({ message: 'User updated', user: updatedUser });
   } catch (error) {
     res.status(500).json({ message: 'Error to update user', error });
