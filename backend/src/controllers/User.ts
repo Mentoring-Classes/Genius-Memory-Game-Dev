@@ -1,6 +1,7 @@
 import User from "../models/User";
 import Rank from "../models/Rank";
 import { Request, Response } from 'express';
+import { Types } from "mongoose";
 
 export const create = async (req: Request, res: Response) => {
   const { email, password } = req.body
@@ -24,7 +25,7 @@ export const create = async (req: Request, res: Response) => {
 
   try {
     await user.save()
-    res.status(201).json({ msg: 'Save',user: user })
+    res.status(201).json({ msg: 'Save', user: user })
 
   } catch (error) {
     res.status(500).json({ msg: "Error" })
@@ -33,29 +34,38 @@ export const create = async (req: Request, res: Response) => {
 
 export const patch = async (req: Request, res: Response) => {
   const { id } = req.params;
-    const updates = req.body;
+  const updates = req.body;
 
+  try {
+    const oldRankPoints = await User.findById(id).select('rankPoints rank');
     const updatedUser = await User.findByIdAndUpdate(id, updates, { new: true });
 
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const findUserRank = await Rank.findById(updatedUser.rank);
-    console.log(findUserRank);
+    const findRank = await Rank.findById(updatedUser.rank);
+    console.log(findRank);
 
-    if (!findUserRank) {
+    if (!findRank) {
       return res.status(404).json({ message: 'Rank not found' });
     }
-    if (updatedUser.rankPoints >= findUserRank.requiredPoints) {
-      const newRank = await Rank.findOne({ rank: findUserRank?.nextRank });
-      await updatedUser.updateOne({ rank: newRank?._id });
+
+    if (updatedUser.rankPoints >= findRank.requiredPoints) {
+      const newRank = await Rank.findOne({ rank: findRank?.nextRank });
+
+      if (updatedUser.rankPoints <= findRank.requiredPoints + 300) {
+        await updatedUser.updateOne({ rank: newRank?._id});
+      } else {
+
+        console.error("Error to update rank");
+        updatedUser.set({ rankPoints: oldRankPoints?.rankPoints });
+        await updatedUser.save();
+      }
     }
-    
-  try {
-    await updatedUser.save()
     res.json({ message: 'User updated', user: updatedUser });
   } catch (error) {
+    console.error("Error to update rank", error);
     res.status(500).json({ message: 'Error to update user', error });
   }
 };
