@@ -11,9 +11,9 @@ interface IUser extends Document {
 const UserSchema = new Schema<IUser>({
   email: { type: String, required: true, unique: true, lowercase: true },
   password: { type: String, required: true },
-  rankPoints: { type: Number, default: 0},
+  rankPoints: { type: Number, default: 0 },
   bestScore: { type: Number, default: 0 },
-  rank: { type: Schema.Types.ObjectId, ref: 'Rank' } 
+  rank: { type: Schema.Types.ObjectId, ref: 'Rank' }
 }, { timestamps: true });
 
 export default mongoose.model<IUser>('User', UserSchema);

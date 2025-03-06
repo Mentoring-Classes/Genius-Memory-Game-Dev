@@ -1,7 +1,6 @@
 import User from "../models/User";
 import Rank from "../models/Rank";
 import { Request, Response } from 'express';
-import { Types } from "mongoose";
 
 export const create = async (req: Request, res: Response) => {
   const { email, password } = req.body
@@ -20,7 +19,7 @@ export const create = async (req: Request, res: Response) => {
   const user = new User({
     email: email,
     password: password,
-    rank: defaultRank?._id 
+    rank: defaultRank?._id
   });
 
   try {
@@ -55,7 +54,7 @@ export const patch = async (req: Request, res: Response) => {
       const newRank = await Rank.findOne({ rank: findRank?.nextRank });
 
       if (updatedUser.rankPoints <= findRank.requiredPoints + 300) {
-        await updatedUser.updateOne({ rank: newRank?._id});
+        await updatedUser.updateOne({ rank: newRank?._id });
       } else {
 
         console.error("Error to update rank");
