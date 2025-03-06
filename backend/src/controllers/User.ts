@@ -31,7 +31,7 @@ export const create = async (req: Request, res: Response) => {
   }
 }
 
-export const patch = async (req: Request, res: Response) => {
+export const update = async (req: Request, res: Response) => {
   const { id } = req.params;
   const updates = req.body;
 
