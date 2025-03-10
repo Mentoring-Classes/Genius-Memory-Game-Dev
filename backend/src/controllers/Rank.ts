@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import Rank from '../models/Rank';
+import { allRanks } from '../consts/rank';
 
 export const create = async (req: Request, res: Response) => {
-  const allRanks = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Grandmaster'];
 
   try {
     for (let i = 0; i < allRanks.length; i++) {
