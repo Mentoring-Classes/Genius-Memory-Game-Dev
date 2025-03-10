@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import Rank from '../models/Rank';
-import { allRanks } from '../consts/rank';
+import { allRanks } from '../consts/Rank';
 import { RANK_MESSAGES } from '../consts/Messages';
 
 export const create = async (req: Request, res: Response) => {
