@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Rank from '../models/Rank';
 import { allRanks } from '../consts/rank';
+import { RANK_MESSAGES } from '../consts/Messages';
 
 export const create = async (req: Request, res: Response) => {
 
@@ -9,7 +10,7 @@ export const create = async (req: Request, res: Response) => {
       const rankExist = await Rank.findOne({ rank: allRanks[i] })
 
       if (rankExist) {
-        return res.status(422).json({ msg: `Rank ${rankExist} already exists` });
+        return res.status(422).json({ msg: RANK_MESSAGES.RANK_ALREADY_EXISTS(allRanks[i]) });
       } else {
         const newRank = new Rank({
           rank: allRanks[i],
@@ -19,10 +20,10 @@ export const create = async (req: Request, res: Response) => {
         await newRank.save();
       }
     }
-    res.status(201).json({ msg: 'Rank saved successfully' });
+    res.status(201).json({ msg: RANK_MESSAGES.RANK_SAVED_SUCCESSFULLY });
 
   } catch (error) {
-    res.status(500).json({ msg: 'Error saving rank', error });
+    res.status(500).json({ msg: RANK_MESSAGES.ERROR_SAVING_RANK, error });
   }
 };
 
@@ -34,13 +35,13 @@ export const patch = async (req: Request, res: Response) => {
     const updatedRank = await Rank.findByIdAndUpdate(id, updates, { new: true });
 
     if (!updatedRank) {
-      return res.status(404).json({ msg: 'Rank not found' });
+      return res.status(404).json({ msg: RANK_MESSAGES.RANK_NOT_FOUND });
     }
 
-    res.json({ msg: 'Rank updated successfully', rank: updatedRank });
+    res.json({ msg: RANK_MESSAGES.RANK_UPDATED_SUCCESSFULLY, rank: updatedRank });
 
   } catch (error) {
-    res.status(500).json({ msg: 'Error updating rank', error });
+    res.status(500).json({ msg: RANK_MESSAGES.ERROR_UPDATING_RANK, error });
   }
 };
 
@@ -51,13 +52,13 @@ export const get = async (req: Request, res: Response) => {
     const rank = await Rank.findById(id);
 
     if (!rank) {
-      return res.status(404).json({ msg: 'Rank not found' });
+      return res.status(404).json({ msg: RANK_MESSAGES.RANK_NOT_FOUND });
     }
 
     res.json(rank);
 
   } catch (error) {
-    res.status(500).json({ msg: 'Error fetching rank', error });
+    res.status(500).json({ msg: RANK_MESSAGES.ERROR_FETCHING_RANK, error });
   }
 };
 
@@ -68,12 +69,12 @@ export const remove = async (req: Request, res: Response) => {
     const rank = await Rank.findByIdAndDelete(id);
 
     if (!rank) {
-      return res.status(404).json({ msg: 'Rank not found' });
+      return res.status(404).json({ msg: RANK_MESSAGES.RANK_NOT_FOUND });
     }
 
-    res.json({ msg: 'Rank deleted successfully' });
+    res.json({ msg: RANK_MESSAGES.RANK_DELETED_SUCCESSFULLY });
 
   } catch (error) {
-    res.status(500).json({ msg: 'Error deleting rank', error });
+    res.status(500).json({ msg: RANK_MESSAGES.ERROR_DELETING_RANK, error });
   }
 };

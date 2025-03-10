@@ -1,18 +1,19 @@
 import User from "../models/User";
 import Rank from "../models/Rank";
 import { Request, Response } from 'express';
+import { USER_MESSAGES, RANK_MESSAGES } from '../consts/Messages';
 
 export const create = async (req: Request, res: Response) => {
   const { email, password } = req.body
 
   if (!email && !password) {
-    return res.status(422).json({ msg: 'Email and Password is required' })
+    return res.status(422).json({ msg: USER_MESSAGES.EMAIL_AND_PASSWORD_REQUIRED })
   }
 
   const userExist = await User.findOne({ email: email })
 
   if (userExist) {
-    return res.status(422).json({ msg: 'Email already exists' })
+    return res.status(422).json({ msg: USER_MESSAGES.EMAIL_ALREADY_EXISTS })
   }
   const defaultRank = await Rank.findOne({ rank: "Bronze" });
 
@@ -24,10 +25,10 @@ export const create = async (req: Request, res: Response) => {
 
   try {
     await user.save()
-    res.status(201).json({ msg: 'Save', user: user })
+    res.status(201).json({ msg: USER_MESSAGES.USER_SAVED_SUCCESSFULLY, user: user })
 
   } catch (error) {
-    res.status(500).json({ msg: "Error" })
+    res.status(500).json({ msg: USER_MESSAGES.ERROR_SAVING_USER, error })
   }
 }
 
@@ -40,14 +41,14 @@ export const update = async (req: Request, res: Response) => {
     const updatedUser = await User.findByIdAndUpdate(id, updates, { new: true });
 
     if (!updatedUser) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: USER_MESSAGES.USER_NOT_FOUND });
     }
 
     const findRank = await Rank.findById(updatedUser.rank);
     console.log(findRank);
 
     if (!findRank) {
-      return res.status(404).json({ message: 'Rank not found' });
+      return res.status(404).json({ message: RANK_MESSAGES.RANK_NOT_FOUND });
     }
 
     if (updatedUser.rankPoints >= findRank.requiredPoints) {
@@ -57,15 +58,15 @@ export const update = async (req: Request, res: Response) => {
         await updatedUser.updateOne({ rank: newRank?._id });
       } else {
 
-        console.error("Error to update rank");
+        console.error(RANK_MESSAGES.ERROR_UPDATING_RANK);
         updatedUser.set({ rankPoints: oldRankPoints?.rankPoints });
         await updatedUser.save();
       }
     }
-    res.json({ message: 'User updated', user: updatedUser });
+    res.json({ message: USER_MESSAGES.USER_UPDATED_SUCCESSFULLY, user: updatedUser });
   } catch (error) {
-    console.error("Error to update rank", error);
-    res.status(500).json({ message: 'Error to update user', error });
+    console.error(RANK_MESSAGES.ERROR_UPDATING_RANK, error);
+    res.status(500).json({ message: USER_MESSAGES.ERROR_UPDATING_USER, error });
   }
 };
 
@@ -76,14 +77,14 @@ export const get = async (req: Request, res: Response) => {
     const user = await User.findById(id);
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: USER_MESSAGES.USER_NOT_FOUND });
     }
 
     res.json(user);
 
   } catch (error) {
 
-    res.status(500).json({ msg: "Error to find user", error });
+    res.status(500).json({ msg: USER_MESSAGES.USER_NOT_FOUND, error });
   }
 };
 
@@ -93,10 +94,10 @@ export const remove = async (req: Request, res: Response) => {
     const user = await User.findByIdAndDelete(id);
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: USER_MESSAGES.USER_NOT_FOUND });
     }
-    res.status(200).json({ msg: 'User deleted' });
+    res.status(200).json({ msg: USER_MESSAGES.USER_DELETED_SUCCESSFULLY });
   } catch (error) {
-    res.status(500).json({ msg: 'Error to delete user', error });
+    res.status(500).json({ msg: USER_MESSAGES.ERROR_DELETING_USER, error });
   }
 }
