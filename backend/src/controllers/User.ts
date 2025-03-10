@@ -45,7 +45,6 @@ export const update = async (req: Request, res: Response) => {
     }
 
     const findRank = await Rank.findById(updatedUser.rank);
-    console.log(findRank);
 
     if (!findRank) {
       return res.status(404).json({ message: RANK_MESSAGES.RANK_NOT_FOUND });
@@ -63,10 +62,10 @@ export const update = async (req: Request, res: Response) => {
         await updatedUser.save();
       }
     }
-    res.json({ message: USER_MESSAGES.USER_UPDATED_SUCCESSFULLY, user: updatedUser });
+    return res.json({ message: USER_MESSAGES.USER_UPDATED_SUCCESSFULLY, user: updatedUser });
   } catch (error) {
     console.error(RANK_MESSAGES.ERROR_UPDATING_RANK, error);
-    res.status(500).json({ message: USER_MESSAGES.ERROR_UPDATING_USER, error });
+    return res.status(500).json({ message: USER_MESSAGES.ERROR_UPDATING_USER, error });
   }
 };
 
@@ -83,8 +82,7 @@ export const get = async (req: Request, res: Response) => {
     res.json(user);
 
   } catch (error) {
-
-    res.status(500).json({ msg: USER_MESSAGES.USER_NOT_FOUND, error });
+    return res.status(500).json({ msg: USER_MESSAGES.USER_NOT_FOUND, error });
   }
 };
 
@@ -96,8 +94,8 @@ export const remove = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).json({ error: USER_MESSAGES.USER_NOT_FOUND });
     }
-    res.status(200).json({ msg: USER_MESSAGES.USER_DELETED_SUCCESSFULLY });
+    return res.status(200).json({ msg: USER_MESSAGES.USER_DELETED_SUCCESSFULLY });
   } catch (error) {
-    res.status(500).json({ msg: USER_MESSAGES.ERROR_DELETING_USER, error });
+    return res.status(500).json({ msg: USER_MESSAGES.ERROR_DELETING_USER, error });
   }
 }

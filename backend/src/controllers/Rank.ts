@@ -15,10 +15,10 @@ export const create = async (req: Request, res: Response) => {
       });
       await newRank.save();
     }
-    res.status(201).json({ msg: RANK_MESSAGES.RANK_SAVED_SUCCESSFULLY });
+    return res.status(201).json({ msg: RANK_MESSAGES.RANK_SAVED_SUCCESSFULLY });
 
   } catch (error) {
-    res.status(500).json({ msg: RANK_MESSAGES.ERROR_SAVING_RANK, error });
+    return res.status(500).json({ msg: RANK_MESSAGES.ERROR_SAVING_RANK, error });
   }
 };
 
@@ -33,10 +33,10 @@ export const patch = async (req: Request, res: Response) => {
       return res.status(404).json({ msg: RANK_MESSAGES.RANK_NOT_FOUND });
     }
 
-    res.json({ msg: RANK_MESSAGES.RANK_UPDATED_SUCCESSFULLY, rank: updatedRank });
+    return res.json({ msg: RANK_MESSAGES.RANK_UPDATED_SUCCESSFULLY, rank: updatedRank });
 
   } catch (error) {
-    res.status(500).json({ msg: RANK_MESSAGES.ERROR_UPDATING_RANK, error });
+    return res.status(500).json({ msg: RANK_MESSAGES.ERROR_UPDATING_RANK, error });
   }
 };
 
@@ -50,10 +50,10 @@ export const get = async (req: Request, res: Response) => {
       return res.status(404).json({ msg: RANK_MESSAGES.RANK_NOT_FOUND });
     }
 
-    res.json(rank);
+    return res.json(rank);
 
   } catch (error) {
-    res.status(500).json({ msg: RANK_MESSAGES.ERROR_FETCHING_RANK, error });
+    return res.status(500).json({ msg: RANK_MESSAGES.ERROR_FETCHING_RANK, error });
   }
 };
 
@@ -67,9 +67,9 @@ export const remove = async (req: Request, res: Response) => {
       return res.status(404).json({ msg: RANK_MESSAGES.RANK_NOT_FOUND });
     }
 
-    res.json({ msg: RANK_MESSAGES.RANK_DELETED_SUCCESSFULLY });
+    return res.json({ msg: RANK_MESSAGES.RANK_DELETED_SUCCESSFULLY });
 
   } catch (error) {
-    res.status(500).json({ msg: RANK_MESSAGES.ERROR_DELETING_RANK, error });
+    return res.status(500).json({ msg: RANK_MESSAGES.ERROR_DELETING_RANK, error });
   }
 };
