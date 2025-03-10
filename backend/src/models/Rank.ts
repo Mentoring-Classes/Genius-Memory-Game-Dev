@@ -7,7 +7,7 @@ interface IRank extends Document {
 }
 
 const RankSchema = new Schema<IRank>({
-  rank: { type: String },
+  rank: { type: String, required: true, unique: true },
   requiredPoints: { type: Number, default: 300 },
   nextRank: { type: String }
 }, { timestamps: true });

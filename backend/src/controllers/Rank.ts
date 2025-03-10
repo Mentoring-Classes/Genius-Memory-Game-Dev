@@ -7,18 +7,13 @@ export const create = async (req: Request, res: Response) => {
 
   try {
     for (let i = 0; i < allRanks.length; i++) {
-      const rankExist = await Rank.findOne({ rank: allRanks[i] })
 
-      if (rankExist) {
-        return res.status(422).json({ msg: RANK_MESSAGES.RANK_ALREADY_EXISTS(allRanks[i]) });
-      } else {
-        const newRank = new Rank({
-          rank: allRanks[i],
-          requiredPoints: 300 * (i + 1),
-          nextRank: allRanks[i + 1]
-        });
-        await newRank.save();
-      }
+      const newRank = new Rank({
+        rank: allRanks[i],
+        requiredPoints: 300 * (i + 1),
+        nextRank: allRanks[i + 1]
+      });
+      await newRank.save();
     }
     res.status(201).json({ msg: RANK_MESSAGES.RANK_SAVED_SUCCESSFULLY });
 
