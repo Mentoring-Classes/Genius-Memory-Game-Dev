@@ -70,16 +70,15 @@ export const update = async (req: Request, res: Response) => {
 
 export const get = async (req: Request, res: Response) => {
   const { id } = req.params;
-
+  
   try {
     const user = await User.findById(id);
 
     if (!user) {
       return res.status(404).json({ error: USER_MESSAGES.USER_NOT_FOUND });
     }
-
     res.json(user);
-
+    
   } catch (error) {
     return res.status(500).json({ msg: USER_MESSAGES.USER_NOT_FOUND, error });
   }
