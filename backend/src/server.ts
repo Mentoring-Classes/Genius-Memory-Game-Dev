@@ -13,7 +13,6 @@ app.use(cors());
 app.use(loggerMiddleware);
 app.use(routes);
 
-
 const dbUser = process.env.DB_USER
 const dbPassword = process.env.DB_PASS
 mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@backend.k11ic.mongodb.net/?retryWrites=true&w=majority&appName=Backend`)
