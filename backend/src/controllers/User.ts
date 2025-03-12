@@ -1,5 +1,6 @@
 import User from "../models/User";
 import Rank from "../models/Rank";
+import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import { USER_MESSAGES, RANK_MESSAGES } from '../consts/Messages';
 
@@ -17,9 +18,12 @@ export const create = async (req: Request, res: Response) => {
   }
   const defaultRank = await Rank.findOne({ rank: "Bronze" });
 
+  const salt = await bcrypt.genSalt(12);
+  const passwordHash = await bcrypt.hash(password, salt);
+  
   const user = new User({
     email: email,
-    password: password,
+    password: passwordHash,
     rank: defaultRank?._id
   });
 
