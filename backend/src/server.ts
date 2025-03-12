@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import express from "express";
 import mongoose from "mongoose";
 import routes from './routes';
+import loggerMiddleware from './middlewares/logger';
 
 import cors from 'cors';
 
@@ -9,7 +10,9 @@ dotenv.config();
 const app = express();
 app.use(express.json())
 app.use(cors());
+app.use(loggerMiddleware);
 app.use(routes);
+
 
 const dbUser = process.env.DB_USER
 const dbPassword = process.env.DB_PASS
