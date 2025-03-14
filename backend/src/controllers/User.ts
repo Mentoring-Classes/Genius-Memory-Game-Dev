@@ -25,7 +25,12 @@ export const create = async (req: Request, res: Response) => {
 
   try {
     await user.save()
-    res.status(201).json({ msg: USER_MESSAGES.USER_SAVED_SUCCESSFULLY, user: user })
+    
+    const { password, ...userWithoutPassword } = user.toObject()
+    
+    res.status(201).json({ 
+      msg: USER_MESSAGES.USER_SAVED_SUCCESSFULLY, user: userWithoutPassword 
+    })
 
   } catch (error) {
     res.status(500).json({ msg: USER_MESSAGES.ERROR_SAVING_USER, error })
@@ -58,10 +63,17 @@ export const update = async (req: Request, res: Response) => {
       } else {
         updatedUser.set({ rankPoints: oldRankPoints?.rankPoints });
         await updatedUser.save();
-        throw new Error(RANK_MESSAGES.ERROR_UPDATING_RANK);
+        return res.status(400).json({ 
+          message: RANK_MESSAGES.ERROR_UPDATING_RANK 
+        });
       }
     }
-    return res.json({ message: USER_MESSAGES.USER_UPDATED_SUCCESSFULLY, user: updatedUser });
+
+    const { password, ...userWithoutPassword } = updatedUser.toObject();
+
+    return res.json({ 
+      message: USER_MESSAGES.USER_UPDATED_SUCCESSFULLY, user: userWithoutPassword 
+    });
   } catch (error) {
     console.error(RANK_MESSAGES.ERROR_UPDATING_RANK, error);
     return res.status(500).json({ message: USER_MESSAGES.ERROR_UPDATING_USER, error });
@@ -78,8 +90,9 @@ export const get = async (req: Request, res: Response) => {
       return res.status(404).json({ error: USER_MESSAGES.USER_NOT_FOUND });
     }
 
-    res.json(user);
+    const { password, ...userWithoutPassword } = user.toObject();
 
+    res.json(userWithoutPassword);
   } catch (error) {
     return res.status(500).json({ msg: USER_MESSAGES.USER_NOT_FOUND, error });
   }
