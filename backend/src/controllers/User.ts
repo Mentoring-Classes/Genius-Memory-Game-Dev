@@ -42,38 +42,15 @@ export const update = async (req: Request, res: Response) => {
   const updates = req.body;
 
   try {
-    const oldRankPoints = await User.findById(id).select('rankPoints rank');
     const updatedUser = await User.findByIdAndUpdate(id, updates, { new: true });
 
     if (!updatedUser) {
-      return res.status(404).json({ message: USER_MESSAGES.USER_NOT_FOUND });
-    }
-
-    const findRank = await Rank.findById(updatedUser.rank);
-
-    if (!findRank) {
-      return res.status(404).json({ message: RANK_MESSAGES.RANK_NOT_FOUND });
-    }
-
-    if (updatedUser.rankPoints >= findRank.requiredPoints) {
-      const newRank = await Rank.findOne({ rank: findRank?.nextRank });
-
-      if (updatedUser.rankPoints <= findRank.requiredPoints) {
-        await updatedUser.updateOne({ rank: newRank?._id });
-      } else {
-        updatedUser.set({ rankPoints: oldRankPoints?.rankPoints });
-        await updatedUser.save();
-        return res.status(400).json({ 
-          message: RANK_MESSAGES.ERROR_UPDATING_RANK 
-        });
-      }
+      return res.status(404).json({ error: USER_MESSAGES.USER_NOT_FOUND });
     }
 
     const { password, ...userWithoutPassword } = updatedUser.toObject();
 
-    return res.json({ 
-      message: USER_MESSAGES.USER_UPDATED_SUCCESSFULLY, user: userWithoutPassword 
-    });
+    return res.json({ message: USER_MESSAGES.USER_UPDATED_SUCCESSFULLY, user: userWithoutPassword });
   } catch (error) {
     console.error(RANK_MESSAGES.ERROR_UPDATING_RANK, error);
     return res.status(500).json({ message: USER_MESSAGES.ERROR_UPDATING_USER, error });
