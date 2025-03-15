@@ -20,28 +20,23 @@ export const updateUserRank = async (req: Request, res: Response) => {
     }
 
     // Aqui é só pra verificar os valores
-    /* console.log("rankPoints do usuario " + user?.rankPoints);
+    console.log("rankPoints do usuario " + user?.rankPoints);
     console.log("rankPoints do body " + rankPoints);
-    console.log("pontos necessarios " + findRank?.requiredPoints); */
+    console.log("pontos necessarios " + findRank?.requiredPoints);
 
-      if (rankPoints <= findRank.requiredPoints) {
-        const newRank = await Rank.findOne({ rank: findRank?.nextRank });
+    if (rankPoints <= findRank.requiredPoints + 300) {
+      const newRank = await Rank.findOne({ rank: findRank?.nextRank });
 
-        if (rankPoints >= findRank?.requiredPoints) {
-          await user.updateOne({ rank: newRank?._id });
-          await user.save();
-          return res.status(200).json({ message: RANK_MESSAGES.RANK_UPDATED_SUCCESSFULLY });
-        }
-          user.rankPoints = rankPoints; 
-          await user.save(); 
-          return res.status(200).json({ message: RANK_MESSAGES.RANK_UPDATED_SUCCESSFULLY });
-        
-      }else{
-        user.rankPoints = user?.rankPoints;
-        return res.status(500).json({ message: RANK_MESSAGES.ERROR_FETCHING_RANK });
-      }
-      
-    
+      await user.updateOne({ rank: newRank?._id });
+      user.rankPoints = rankPoints;
+      await user.save();
+      return res.status(200).json({ message: RANK_MESSAGES.RANK_UPDATED_SUCCESSFULLY });
+
+    } else {
+      user.rankPoints = user?.rankPoints;
+      return res.status(500).json({ message: RANK_MESSAGES.ERROR_FETCHING_RANK });
+    }
+
   } catch (error) {
     console.error(RANK_MESSAGES.ERROR_UPDATING_RANK, error);
     return res.status(500).json({ message: RANK_MESSAGES.ERROR_UPDATING_RANK, error });
@@ -54,15 +49,15 @@ export const create = async (req: Request, res: Response) => {
     for (let i = 0; i < allRanks.length; i++) {
       const existingRank = await Rank.findOne({ rank: allRanks[i] });
 
-      if(!existingRank){
+      if (!existingRank) {
         const newRank = new Rank({
           rank: allRanks[i],
           requiredPoints: 300 * (i + 1),
           nextRank: allRanks[i + 1]
         });
         await newRank.save();
-      }else{
-        return res.status(500).json({ msg: RANK_MESSAGES.RANK_ALREADY_EXISTS(allRanks[i])});
+      } else {
+        return res.status(500).json({ msg: RANK_MESSAGES.RANK_ALREADY_EXISTS(allRanks[i]) });
       }
     }
     return res.status(201).json({ msg: RANK_MESSAGES.RANK_SAVED_SUCCESSFULLY });
