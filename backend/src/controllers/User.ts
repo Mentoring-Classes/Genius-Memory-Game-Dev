@@ -69,7 +69,7 @@ export const get = async (req: Request, res: Response) => {
 
     const { password, ...userWithoutPassword } = user.toObject();
 
-    res.json(userWithoutPassword);
+    return res.json(userWithoutPassword);
   } catch (error) {
     return res.status(500).json({ msg: USER_MESSAGES.USER_NOT_FOUND, error });
   }
