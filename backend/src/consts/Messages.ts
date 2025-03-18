@@ -8,6 +8,7 @@ export const RANK_MESSAGES = {
     ERROR_FETCHING_RANK: 'Error fetching rank',
     ERROR_DELETING_RANK: 'Error deleting rank',
     RANK_DELETED_SUCCESSFULLY: 'Rank deleted successfully',
+    RANK_NO_UPDATE_NEEDED: 'No update needed',
 }
 
 export const USER_MESSAGES = {

@@ -25,7 +25,12 @@ export const create = async (req: Request, res: Response) => {
 
   try {
     await user.save()
-    res.status(201).json({ msg: USER_MESSAGES.USER_SAVED_SUCCESSFULLY, user: user })
+    
+    const { password, ...userWithoutPassword } = user.toObject()
+    
+    res.status(201).json({ 
+      msg: USER_MESSAGES.USER_SAVED_SUCCESSFULLY, user: userWithoutPassword 
+    })
 
   } catch (error) {
     res.status(500).json({ msg: USER_MESSAGES.ERROR_SAVING_USER, error })
@@ -37,32 +42,15 @@ export const update = async (req: Request, res: Response) => {
   const updates = req.body;
 
   try {
-    const oldRankPoints = await User.findById(id).select('rankPoints rank');
     const updatedUser = await User.findByIdAndUpdate(id, updates, { new: true });
 
     if (!updatedUser) {
-      return res.status(404).json({ message: USER_MESSAGES.USER_NOT_FOUND });
+      return res.status(404).json({ error: USER_MESSAGES.USER_NOT_FOUND });
     }
 
-    const findRank = await Rank.findById(updatedUser.rank);
+    const { password, ...userWithoutPassword } = updatedUser.toObject();
 
-    if (!findRank) {
-      return res.status(404).json({ message: RANK_MESSAGES.RANK_NOT_FOUND });
-    }
-
-    if (updatedUser.rankPoints >= findRank.requiredPoints) {
-      const newRank = await Rank.findOne({ rank: findRank?.nextRank });
-
-      if (updatedUser.rankPoints <= findRank.requiredPoints + 300) {
-        await updatedUser.updateOne({ rank: newRank?._id });
-      } else {
-
-        console.error(RANK_MESSAGES.ERROR_UPDATING_RANK);
-        updatedUser.set({ rankPoints: oldRankPoints?.rankPoints });
-        await updatedUser.save();
-      }
-    }
-    return res.json({ message: USER_MESSAGES.USER_UPDATED_SUCCESSFULLY, user: updatedUser });
+    return res.json({ message: USER_MESSAGES.USER_UPDATED_SUCCESSFULLY, user: userWithoutPassword });
   } catch (error) {
     console.error(RANK_MESSAGES.ERROR_UPDATING_RANK, error);
     return res.status(500).json({ message: USER_MESSAGES.ERROR_UPDATING_USER, error });
@@ -79,8 +67,9 @@ export const get = async (req: Request, res: Response) => {
       return res.status(404).json({ error: USER_MESSAGES.USER_NOT_FOUND });
     }
 
-    res.json(user);
+    const { password, ...userWithoutPassword } = user.toObject();
 
+    return res.json(userWithoutPassword);
   } catch (error) {
     return res.status(500).json({ msg: USER_MESSAGES.USER_NOT_FOUND, error });
   }
