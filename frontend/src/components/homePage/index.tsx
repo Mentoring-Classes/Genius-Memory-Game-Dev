@@ -13,7 +13,6 @@ const Home = () => {
 					intro: `
 						<div style="text-align: center;">
 							Bem-vindo ao Genius Game 
-							<img src="/maka.gif" class='gif' alt="Gif de boas-vindas" />
 						</div>
 					`,
 				},
@@ -34,7 +33,7 @@ const Home = () => {
 		<div className="HomePage">
 			<h1>Genius Game</h1>
 			<div className="GameModes">
-				<ButtonLink buttontext="Solo Game" to="/" id="Solo-Game" />
+				<ButtonLink buttontext="Solo Game" to="/soloGame" id="Solo-Game" />
 				<ButtonLink buttontext="1 vs 1" to="/" id="One-vs-One" />
 				<ButtonLink buttontext="Co-op" to="/" id="Co-op" />
 			</div>
