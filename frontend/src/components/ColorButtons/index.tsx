@@ -1,16 +1,18 @@
 import { Props } from "./ColorButtonsTypes"
 import './ColorButtons.css'
 
+import gsap from "gsap"
+
 const ColorButtons = ({Sequencia}: Props) => {
   return (
-    <div>
+    <div className="ColorButtons">
         <div className='Buttons'>
-            <button className="Red" onClick={() => { Sequencia('Red') }}>Red</button>
-            <button className="Yellow" onClick={() => { Sequencia('Yellow') }}>Yellow</button>
+            <button className="Red" onClick={() => { Sequencia('Red') }}></button>
+            <button className="Yellow" onClick={() => { Sequencia('Yellow') }}></button>
         </div>
         <div className='Buttons'>
-            <button className="Green" onClick={() => { Sequencia('Green') }}>Green</button>
-            <button className="Blue" onClick={() => { Sequencia('Blue') }}>Blue</button>
+            <button className="Green" onClick={() => { Sequencia('Green') }}></button>
+            <button className="Blue" onClick={() => { Sequencia('Blue') }}></button>
         </div>
     </div>
   )
