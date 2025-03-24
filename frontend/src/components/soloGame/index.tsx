@@ -34,9 +34,9 @@ const SoloGame = () => {
     });
   }, [gameColorChoices])
 
-  const Sequencia = async (corEscolhidaPeloPlayer: string) => {
-    setPlayerChoices(playerChoices.concat(corEscolhidaPeloPlayer));
-    const correctColor = corEscolhidaPeloPlayer === gameColorChoices[playerChoices.length];
+  const Sequence = async (colorChosenByPlayer: string) => {
+    setPlayerChoices(playerChoices.concat(colorChosenByPlayer));
+    const correctColor = colorChosenByPlayer === gameColorChoices[playerChoices.length];
 
     if (correctColor) {
       setFlashClass('flash-green');
@@ -63,9 +63,9 @@ const SoloGame = () => {
   }
   return (
     <>
-      <h1>Rodada {round}</h1>
-      <ColorButtons Sequencia={Sequencia}></ColorButtons>
-      <ButtonLink buttontext={'Voltar'} to={'/'} id={'BackButton'}></ButtonLink>
+      <h1>Round {round}</h1>
+      <ColorButtons Sequence={Sequence}></ColorButtons>
+      <ButtonLink buttontext={'Back'} to={'/'} id={'BackButton'}></ButtonLink>
     </>
   )
 }

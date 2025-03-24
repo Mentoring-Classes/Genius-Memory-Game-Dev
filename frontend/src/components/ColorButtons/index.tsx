@@ -4,7 +4,7 @@ import './ColorButtons.css'
 import { gsap } from "gsap"
 import { useEffect } from "react"
 
-const ColorButtons = ({ Sequencia }: Props) => {
+const ColorButtons = ({ Sequence }: Props) => {
 
   useEffect(() => {
     gsap.fromTo(".Buttons", {
@@ -39,12 +39,12 @@ const ColorButtons = ({ Sequencia }: Props) => {
   return (
     <div className="ColorButtons">
       <div className='Buttons'>
-        <button className="Red" onClick={() => { Sequencia('Red'),triggerAnimation('.Red') }}></button>
-        <button className="Yellow" onClick={() => { Sequencia('Yellow'), triggerAnimation('.Yellow') }}></button>
+        <button className="Red" onClick={() => { Sequence('Red'),triggerAnimation('.Red') }}></button>
+        <button className="Yellow" onClick={() => { Sequence('Yellow'), triggerAnimation('.Yellow') }}></button>
       </div>
       <div className='Buttons'>
-        <button className="Green" onClick={() => { Sequencia('Green'), triggerAnimation('.Green') }}></button>
-        <button className="Blue" onClick={() => { Sequencia('Blue'), triggerAnimation('.Blue') }}></button>
+        <button className="Green" onClick={() => { Sequence('Green'), triggerAnimation('.Green') }}></button>
+        <button className="Blue" onClick={() => { Sequence('Blue'), triggerAnimation('.Blue') }}></button>
       </div>
     </div>
   )

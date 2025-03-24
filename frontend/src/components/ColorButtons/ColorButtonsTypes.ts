@@ -1,3 +1,3 @@
 export interface Props {
-    Sequencia: (color: string) => void
+    Sequence: (color: string) => void
 }
