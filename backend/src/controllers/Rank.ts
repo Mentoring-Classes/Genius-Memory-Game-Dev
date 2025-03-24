@@ -19,11 +19,6 @@ export const updateUserRank = async (req: Request, res: Response) => {
       return res.status(404).json({ message: RANK_MESSAGES.RANK_NOT_FOUND });
     }
 
-    // Aqui é só pra verificar os valores
-    console.log("rankPoints do usuario " + user?.rankPoints);
-    console.log("rankPoints do body " + rankPoints);
-    console.log("pontos necessarios " + findRank?.requiredPoints);
-
     if (rankPoints <= findRank.requiredPoints + 300) {
       const newRank = await Rank.findOne({ rank: findRank?.nextRank });
 
