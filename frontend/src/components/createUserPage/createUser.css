@@ -1,0 +1,19 @@
+.create-user-container {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.create-user-form {
+    display: flex;
+    gap: 1.25rem;
+    flex-direction: column;
+}
+.create-user-title {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    margin-bottom:1.5rem;
+}
