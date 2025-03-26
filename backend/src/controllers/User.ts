@@ -39,7 +39,7 @@ export const create = async (req: Request, res: Response) => {
   }
 }
 
-export const postLogin = async  (req: Request, res: Response) => {
+export const login = async  (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   if (!email) {

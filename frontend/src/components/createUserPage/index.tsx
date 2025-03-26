@@ -2,9 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './createUser.css'
 import axios from 'axios'
-import { AxiosError } from 'axios';
-import Alert from '@mui/material/Alert'
-import { Snackbar } from '@mui/material'
+import SnackBar from '../snackbar'
 
 const CreateUser = () => {
 	const [email, setEmail] = useState('')
@@ -19,7 +17,6 @@ const CreateUser = () => {
 				email,
 				password,
 			});
-
 			console.log(response.data);
 			setRegisterSucess(true)
 			setRegisterError(false)
@@ -31,28 +28,14 @@ const CreateUser = () => {
 	};
 	return (
 		<div className="create-user-container">
-			<Snackbar
-				open={registerSucess}
-				autoHideDuration={3000}
-				onClose={() => setRegisterSucess(false)}
-				anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-			>
-				<Alert className='PopUp' sx={{ fontSize: '1.25rem', paddingRight: '20px' }}>
-					Registrado
-				</Alert>
-			</Snackbar>
-
-			<Snackbar
-				open={registerError}
-				autoHideDuration={3000}
-				onClose={() => setRegisterError(false)}
-				anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-			>
-				<Alert className='PopUp' severity="error" sx={{ fontSize: '1.25rem', paddingRight: '20px' }}>
-					Erro ao criar usuário
-				</Alert>
-			</Snackbar>
-			
+			<SnackBar
+				errorAlert={registerError}
+				setErrorAlert={setRegisterError}
+				sucessAlert={registerSucess}
+				setSucessAlert={setRegisterSucess}
+				sucessMessage='Usuário Criado'
+				errorMessage='Erro ao criar usuário'
+			/>
 			<div className="create-user-card">
 				<h1 className="create-user-title">Cadastre-se</h1>
 
