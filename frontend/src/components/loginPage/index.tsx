@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import SnackBar from '../snackbar'
 import './login.css'
@@ -9,6 +9,7 @@ const loginPage = () => {
 	const [password, setPassword] = useState('')
 	const [loginError, setLoginError] = useState(false)
 	const [loginSucess, setLoginSucess] = useState(false)
+	const navigate = useNavigate();
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
@@ -19,9 +20,12 @@ const loginPage = () => {
 				password,
 			});
 
-			console.log(response.data);
+			localStorage.setItem('token', response.data.token);
+        	localStorage.setItem('userId', response.data.id);
 			setLoginSucess(true)
 			setLoginError(false)
+			navigate("/");
+
 		} catch (error: any) {
 			console.log(error.response?.data?.error || 'Erro ao criar usuário');
 			setLoginSucess(false)
