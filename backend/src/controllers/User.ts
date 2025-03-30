@@ -1,7 +1,9 @@
 import User from "../models/User";
 import Rank from "../models/Rank";
+import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import { USER_MESSAGES, RANK_MESSAGES } from '../consts/Messages';
+import jwt from 'jsonwebtoken';
 
 export const create = async (req: Request, res: Response) => {
   const { email, password } = req.body
@@ -37,6 +39,45 @@ export const create = async (req: Request, res: Response) => {
   }
 }
 
+export const login = async  (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  if (!email) {
+    return res.status(422).json({ msg: 'O email é obrigatório' });
+  }
+  if (!password) {
+    return res.status(422).json({ msg: 'A senha é obrigatória' });
+  }
+
+  const user = await User.findOne({ email: email });
+
+  if (!user) {
+    return res.status(422).json({ msg: 'Usuário não encontrado' });
+  }
+
+  const checkPassword = await bcrypt.compare(password, user.password);
+
+  if (!checkPassword) {
+    return res.status(422).json({ msg: 'Senha inválida' });
+  }
+
+  try {
+    const secret = process.env.SECRET_KEY as string;
+
+    const token = jwt.sign(
+      { id: user._id },
+      secret
+    );    
+    res.status(200).json({
+      msg: 'Autenticação feita com sucesso',
+      token,
+      id: user._id
+    });
+  } catch (err) {
+    return res.status(500).json({ msg: 'Algum erro ocorreu' });
+  }
+};
+
 export const update = async (req: Request, res: Response) => {
   const { id } = req.params;
   const updates = req.body;
@@ -52,7 +93,6 @@ export const update = async (req: Request, res: Response) => {
 
     return res.json({ message: USER_MESSAGES.USER_UPDATED_SUCCESSFULLY, user: userWithoutPassword });
   } catch (error) {
-    console.error(RANK_MESSAGES.ERROR_UPDATING_RANK, error);
     return res.status(500).json({ message: USER_MESSAGES.ERROR_UPDATING_USER, error });
   }
 };
