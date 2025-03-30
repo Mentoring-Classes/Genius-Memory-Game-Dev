@@ -55,38 +55,26 @@ export const login = async  (req: Request, res: Response) => {
     return res.status(422).json({ msg: 'Usuário não encontrado' });
   }
 
-  // Checar se a senha é igual ao que o usuario passou
   const checkPassword = await bcrypt.compare(password, user.password);
 
-  //se não for igual
   if (!checkPassword) {
     return res.status(422).json({ msg: 'Senha inválida' });
   }
 
   try {
-    //pega o secret em .env
-    const secret = process.env.SECRET_KEY;
+    const secret = process.env.SECRET_KEY as string;
 
-    if (!secret) {
-      return res.status(500).json({ msg: 'Secret key não está no .env' });
-    }
-
-    //o token ficaria tipo assim https://jwt.io/
     const token = jwt.sign(
-      //aqui seria o PAYLOAD
       { id: user._id },
-      //e aqui seria VERIFY SIGNATURE
       secret
-    );
-    //retorna o token e o id do usuario
+    );    
     res.status(200).json({
       msg: 'Autenticação feita com sucesso',
       token,
       id: user._id
     });
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ msg: 'Algum erro ocorreu' });
+    return res.status(500).json({ msg: 'Algum erro ocorreu' });
   }
 };
 
@@ -105,7 +93,6 @@ export const update = async (req: Request, res: Response) => {
 
     return res.json({ message: USER_MESSAGES.USER_UPDATED_SUCCESSFULLY, user: userWithoutPassword });
   } catch (error) {
-    console.error(RANK_MESSAGES.ERROR_UPDATING_RANK, error);
     return res.status(500).json({ message: USER_MESSAGES.ERROR_UPDATING_USER, error });
   }
 };
