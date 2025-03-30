@@ -13,11 +13,10 @@ const CreateUser = () => {
 		e.preventDefault();
 
 		try {
-			const response = await axios.post('http://localhost:3000/user/register', {
+			await axios.post('http://localhost:3000/user/register', {
 				email,
 				password,
 			});
-			console.log(response.data);
 			setRegisterSucess(true)
 			setRegisterError(false)
 		} catch (error: any) {

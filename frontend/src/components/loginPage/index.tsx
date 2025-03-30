@@ -21,13 +21,12 @@ const loginPage = () => {
 			});
 
 			localStorage.setItem('token', response.data.token);
-        	localStorage.setItem('userId', response.data.id);
+			localStorage.setItem('userId', response.data.id);
 			setLoginSucess(true)
 			setLoginError(false)
 			navigate("/");
 
 		} catch (error: any) {
-			console.log(error.response?.data?.error || 'Erro ao criar usuário');
 			setLoginSucess(false)
 			setLoginError(true)
 		}
