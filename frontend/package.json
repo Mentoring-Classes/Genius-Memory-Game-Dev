@@ -7,7 +7,9 @@
 		"dev": "vite",
 		"build": "vite build",
 		"preview": "vite preview",
-		"lint": "eslint ."
+		"lint": "eslint .",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d dist"
 	},
 	"repository": {
 		"type": "git",
@@ -18,7 +20,7 @@
 	"bugs": {
 		"url": "https://github.com/DanielObara/Genius-Memory-Game/issues"
 	},
-	"homepage": "https://github.com/DanielObara/Genius-Memory-Game#readme",
+	"homepage": "https://Mentoring-Classes.github.io/https-github.com-DanielObara-Genius-Memory-Game/",
 	"devDependencies": {
 		"@commitlint/cli": "^19.6.1",
 		"@commitlint/config-conventional": "^19.6.0",
