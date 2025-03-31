@@ -7,7 +7,9 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"format": "prettier --write .",
 		"prepare": "husky",
-		"lint": "eslint ."
+		"lint": "eslint .",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d dist"
 	},
 	"repository": {
 		"type": "git",
@@ -18,13 +20,14 @@
 	"bugs": {
 		"url": "https://github.com/DanielObara/Genius-Memory-Game/issues"
 	},
-	"homepage": "https://github.com/DanielObara/Genius-Memory-Game#readme",
+	"homepage": "https://Mentoring-Classes.github.io/https-github.com-DanielObara-Genius-Memory-Game/",
 	"devDependencies": {
 		"@commitlint/cli": "^19.6.1",
 		"@commitlint/config-conventional": "^19.6.0",
 		"@eslint/eslintrc": "^3.2.0",
 		"@eslint/js": "^9.18.0",
 		"eslint": "^9.18.0",
+		"gh-pages": "^6.3.0",
 		"globals": "^15.14.0",
 		"husky": "^9.1.7",
 		"lint-staged": "^15.3.0",
