@@ -8,11 +8,11 @@ import NotFound from '../notFound';
 const AppRoutes: React.FC = () => {
 	return (
 		<Routes>
-			<Route path="/" element={<Home />} />
+			<Route path="/Genius-Memory-Game" element={<Home />} />
 			<Route path="*" element={<NotFound />} />
-			<Route path="/register" element={<CreateUser/>} />
-			<Route path="/login" element={<LoginPage />} />
-			<Route path="/soloGame" element={<SoloGame />} />
+			<Route path="/Genius-Memory-Game/register" element={<CreateUser/>} />
+			<Route path="/Genius-Memory-Game/login" element={<LoginPage />} />
+			<Route path="/Genius-Memory-Game/soloGame" element={<SoloGame />} />
 		</Routes>
 	);
 };
