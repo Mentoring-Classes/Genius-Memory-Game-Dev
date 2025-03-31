@@ -7,7 +7,7 @@ import BackgroundProvider from './components/BackgroundContext/BackgroundContext
 function App() {
 	return (
 		<BackgroundProvider>
-			<BrowserRouter>
+			<BrowserRouter basename='/Genius-Memory-Game'>
 				<AppRoutes />
 			</BrowserRouter>
 		</BackgroundProvider>
