@@ -20,7 +20,7 @@
 	"bugs": {
 		"url": "https://github.com/DanielObara/Genius-Memory-Game/issues"
 	},
-	"homepage": "https://Mentoring-Classes.github.io/",
+	"homepage": "https://Mentoring-Classes.github.io/Genius-Memory-Game/",
 	"devDependencies": {
 		"@commitlint/cli": "^19.6.1",
 		"@commitlint/config-conventional": "^19.6.0",
