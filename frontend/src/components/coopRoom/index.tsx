@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import './createUser.css'
+import "./coopRoom.css"
 import axios from 'axios'
 import SnackBar from '../snackbar'
 
