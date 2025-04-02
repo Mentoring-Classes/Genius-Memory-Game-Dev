@@ -18,7 +18,6 @@ const CoopRoom = () => {
 				email,
 				password,
 			})
-			setRegisterSucess(true)
 			setRegisterError(false)
 		} catch (error: any) {
 			console.error(error.response?.data?.error || 'Erro ao criar usuário')

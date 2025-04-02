@@ -1,40 +1,36 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import api from '../../services/api'
+import axios from 'axios'
 import SnackBar from '../snackbar'
 import './login.css'
 
 const loginPage = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loginError, setLoginError] = useState(false)
-  const [loginSucess, setLoginSucess] = useState(false)
-  const navigate = useNavigate()
+	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
+	const [loginError, setLoginError] = useState(false)
+	const [loginSucess, setLoginSucess] = useState(false)
+	const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+	const handleSubmit = async (e: any) => {
+		e.preventDefault();
 
-    try {
-      const response = await api.post('/user/login', {
-        email,
-        password,
-      })
+		try {
+			const response = await axios.post('http://localhost:3000/user/login', {
+				email,
+				password,
+			});
 
-      localStorage.setItem('token', response.data.token)
-      localStorage.setItem('userId', response.data.id)
-      setLoginSucess(true)
-      setLoginError(false)
+			localStorage.setItem('token', response.data.token);
+			localStorage.setItem('userId', response.data.id);
+			setLoginSucess(true)
+			setLoginError(false)
+			navigate("/");
 
-      setTimeout(() => {
-        navigate('/')
-      }, 800)
-    } catch (error: any) {
-      console.error(error.response?.data?.error || 'Erro ao fazer login')
-      setLoginSucess(false)
-      setLoginError(true)
-    }
-  }
-
+		} catch (error: any) {
+			setLoginSucess(false)
+			setLoginError(true)
+		}
+	};
   return (
     <div className="login-container">
       <SnackBar
