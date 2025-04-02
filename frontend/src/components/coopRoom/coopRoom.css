@@ -1,4 +1,4 @@
-.create-user-container {
+.create-room-container {
 	min-height: 100vh;
 	background: linear-gradient(to bottom right, #7e22ce, #2563eb);
 	padding: 1rem;
@@ -7,7 +7,7 @@
 	align-items: center;
 }
 
-.create-user-card {
+.create-room-card {
 	background-color: #fff;
 	padding: 2rem;
 	border-radius: 1.5rem;
@@ -16,13 +16,13 @@
 	max-width: 400px;
 }
 
-.create-user-form {
+.create-room-form {
 	display: flex;
 	gap: 1.25rem;
 	flex-direction: column;
 }
 
-.create-user-title {
+.create-room-title {
 	font-size: 3rem;
 	font-weight: bold;
 	text-align: center;
@@ -33,6 +33,7 @@
 .form-group label {
 	display: block;
 	font-weight: 500;
+	margin-top: 0.5rem;
 	margin-bottom: 0.5rem;
 	color: #555;
 }
@@ -51,7 +52,7 @@
 	outline: none;
 }
 
-.create-user-button {
+.create-room-button {
 	padding: 0.75rem;
 	background-color: #7e22ce;
 	color: white;
@@ -62,23 +63,23 @@
 	transition: background-color 0.3s ease;
 }
 
-.create-user-button:hover {
+.create-room-button:hover {
 	background-color: #6b21a8;
 }
 
-.create-user-link {
+.create-room-link {
     margin-top: 1rem;
     text-align: center;
     font-size: 0.95rem;
     color: #444;
 }
 
-.create-user-link a {
+.create-room-link a {
     color: #7e22ce;
     text-decoration: none;
     font-weight: 500;
 }
 
-.create-user-link a:hover {
+.create-room-link a:hover {
     text-decoration: underline;
 }

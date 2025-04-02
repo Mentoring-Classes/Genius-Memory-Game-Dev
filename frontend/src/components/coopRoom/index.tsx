@@ -1,72 +1,70 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import "./coopRoom.css"
+import './coopRoom.css'
 import axios from 'axios'
 import SnackBar from '../snackbar'
 
 const CoopRoom = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [registerError, setRegisterError] = useState(false)
-  const [registerSucess, setRegisterSucess] = useState(false)
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+	const [roomName, setRoomName] = useState('')
+	const [roomCode, setRoomCode] = useState('')
+	const [registerError, setRegisterError] = useState(false)
 
-    try {
-      await axios.post('http://localhost:3000/user/register', {
-        email,
-        password,
-      });
-      setRegisterSucess(true)
-      setRegisterError(false)
-    } catch (error: any) {
-      console.log(error.response?.data?.error || 'Erro ao criar usuário');
-      setRegisterSucess(false)
-      setRegisterError(true)
-    }
-  };
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault()
+
+		try {
+			//   await axios.post('http://localhost:3000/user/register', {
+			//     roomName,
+			//     roomCode,
+			//   });
+			//   setRegisterError(false)
+		} catch (error: any) {
+			setRegisterError(true)
+		}
+	}
+
+	// trycatch for join room here:
+	//   try {
+
+	//   } catch (error) {
+
+	//   }
 	return (
-		<div className="create-user-container">
-			<SnackBar
-				errorAlert={registerError}
-				setErrorAlert={setRegisterError}
-				sucessAlert={registerSucess}
-				setSucessAlert={setRegisterSucess}
-				sucessMessage="Usuário Criado"
-				errorMessage="Erro ao criar usuário"
-			/>
+		<div className="create-room-container">
+			<div className="create-room-card">
+				<h1 className="create-room-title">Modo Coop</h1>
 
-			<div className="create-user-card">
-				<h1 className="create-user-title">Criar Sala</h1>
-
-				<form className="create-user-form" onSubmit={handleSubmit}>
+				<form className="create-room-form" onSubmit={handleSubmit}>
 					<div className="form-group">
 						<label>Nome da sala</label>
 						<input
-							type="name"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-							placeholder="Digite o nome da sala:"
+							type="text"
+							value={roomName}
+							onChange={(e) => setRoomName(e.target.value)}
+							placeholder="Digite o nome da sala"
 						/>
-					<button type="submit" className="create-user-button">
+					</div>
+					<button type="submit" className="create-room-button">
 						Criar Sala
 					</button>
-					</div>
+				</form>
+
+				<form className="create-room-form" onSubmit={handleSubmit}>
 					<div className="form-group">
 						<label>Entrar na sala</label>
 						<input
-							type="name"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							placeholder="Digite a sala que deseja entrar:"
+							type="text"
+							value={roomCode}
+							onChange={(e) => setRoomCode(e.target.value)}
+							placeholder="Digite o nome da sala:"
 						/>
 					</div>
-					<button type="submit" className="create-user-button">
+					<button type="submit" className="create-room-button">
 						Entrar em uma Sala
 					</button>
 				</form>
 
-				<p className="create-user-link">
+				<p className="create-room-link">
 					Deseja sair? <Link to="/">Menu</Link>
 				</p>
 			</div>
