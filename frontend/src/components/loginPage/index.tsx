@@ -22,7 +22,6 @@ const loginPage = () => {
 
 			localStorage.setItem('token', response.data.token);
 			localStorage.setItem('userId', response.data.id);
-			setLoginSucess(true)
 			setLoginError(false)
 			navigate("/");
 
