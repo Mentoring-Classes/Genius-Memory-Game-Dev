@@ -1,31 +1,30 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import './coopRoom.css'
-import api from '../../services/api'
+import './createUser.css'
+import axios from 'axios'
 import SnackBar from '../snackbar'
 
 const CoopRoom = () => {
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [registerError, setRegisterError] = useState(false)
-	const [registerSucess, setRegisterSucess] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [registerError, setRegisterError] = useState(false)
+  const [registerSucess, setRegisterSucess] = useState(false)
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
 
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault()
-
-		try {
-			await api.post('/user/register', {
-				email,
-				password,
-			})
-			setRegisterError(false)
-		} catch (error: any) {
-			console.error(error.response?.data?.error || 'Erro ao criar usuário')
-			setRegisterSucess(false)
-			setRegisterError(true)
-		}
-	}
-
+    try {
+      await axios.post('http://localhost:3000/user/register', {
+        email,
+        password,
+      });
+      setRegisterSucess(true)
+      setRegisterError(false)
+    } catch (error: any) {
+      console.log(error.response?.data?.error || 'Erro ao criar usuário');
+      setRegisterSucess(false)
+      setRegisterError(true)
+    }
+  };
 	return (
 		<div className="create-user-container">
 			<SnackBar
