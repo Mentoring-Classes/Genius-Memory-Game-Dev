@@ -29,6 +29,11 @@
 	margin-bottom: 1.5rem;
 }
 
+.form-group input {
+	width: 100%;
+	box-sizing: border-box;
+  }
+
 .form-group label {
 	display: block;
 	font-weight: 500;

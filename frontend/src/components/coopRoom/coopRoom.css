@@ -9,7 +9,7 @@
 .create-room-card {
 	display: flex;
 	flex-direction: column;
-	gap: 30px;
+	gap: 40px;
 	background-color: #fff;
 	padding: 2rem;
 	border-radius: 1.5rem;
@@ -32,20 +32,16 @@
 	margin: 0.5rem;
 }
 
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .form-group label {
 	display: block;
 	font-weight: 500;
 	margin-top: 0.5rem;
 	color: #555;
-}
-
-.form-group input {
-	width: 100%;
-	padding: 0.75rem;
-	border: 1px solid #ccc;
-	border-radius: 0.75rem;
-	font-size: 1rem;
-	transition: border-color 0.3s ease;
 }
 
 .form-group input:focus {
