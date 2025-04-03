@@ -3,7 +3,7 @@ import ButtonLink from '../buttonLink';
 import ColorButtons from '../ColorButtons';
 import { SoloGameState } from './SoloGameState';
 import { useBackground } from '../BackgroundContext/BackgroundContext';
-
+import "./SoloGame.css"
 
 const SoloGame = () => {
   const availableColors = ['Red', 'Yellow', 'Green', 'Blue'];
@@ -40,7 +40,7 @@ const SoloGame = () => {
 
     if (correctColor) {
       setFlashClass('flash-green');
-      setTimeout(() => setFlashClass(''), 150);
+      setTimeout(() => setFlashClass(''), 300);
 
       if (playerChoices.length + 1 === gameColorChoices.length) {
         setRound(round + 1);
@@ -48,7 +48,7 @@ const SoloGame = () => {
       }
     } else {
       setFlashClass('flash-red');
-      setTimeout(() => setFlashClass(''), 150);
+      setTimeout(() => setFlashClass(''), 300);
 
       if (round !== 1) {
         setRound(1)
@@ -62,11 +62,11 @@ const SoloGame = () => {
     }
   }
   return (
-    <>
+    <div className='soloGame'>
       <h1>Round {round}</h1>
       <ColorButtons Sequence={Sequence}></ColorButtons>
       <ButtonLink buttontext={'Back'} to={'/'} id={'BackButton'}></ButtonLink>
-    </>
+    </div>
   )
 }
 
