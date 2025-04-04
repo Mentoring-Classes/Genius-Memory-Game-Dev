@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import './createUser.css'
 import axios from 'axios'
 import SnackBar from '../snackbar'
+import ButtonLink from '../buttonLink'
 
 const CreateUser = () => {
   const [email, setEmail] = useState('')
@@ -66,6 +67,7 @@ const CreateUser = () => {
         <p className="create-user-link">
           Já tem conta? <Link to="/login">Entrar</Link>
         </p>
+        <ButtonLink buttontext="Voltar" to="/" id="backMenu" />
       </div>
     </div>
   )

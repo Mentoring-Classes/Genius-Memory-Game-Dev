@@ -86,3 +86,12 @@
 .create-user-link a:hover {
     text-decoration: underline;
 }
+
+#backMenu {
+	box-sizing: border-box;
+	width: 50%;
+	height: 50%;
+	font-size: 0.95rem;
+	font-weight: bold;
+	border-radius: 0.75rem;
+  }

@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './roomForm.css'
 import axios from 'axios'
-import SnackBar from '../snackbar'
 
 const RoomForm = () => {
 	const [roomName, setRoomName] = useState('')

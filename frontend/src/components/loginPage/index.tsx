@@ -3,6 +3,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import SnackBar from '../snackbar'
 import './login.css'
+import Cookies from 'universal-cookie'
+import ButtonLink from '../buttonLink'
+
+const cookies = new Cookies();
 
 const loginPage = () => {
 	const [email, setEmail] = useState('')
@@ -20,8 +24,9 @@ const loginPage = () => {
 				password,
 			});
 
-			localStorage.setItem('token', response.data.token);
-			localStorage.setItem('userId', response.data.id);
+      cookies.set("token", response.data.token);
+      cookies.set("userId", response.data.id || "");
+		
 			setLoginError(false)
 			navigate("/");
 
@@ -75,6 +80,7 @@ const loginPage = () => {
         <p className="login-link">
           Ainda não tem conta? <Link to="/register">Cadastre-se</Link>
         </p>
+        <ButtonLink buttontext="Voltar" to="/" id="backMenu" />
       </div>
     </div>
   )

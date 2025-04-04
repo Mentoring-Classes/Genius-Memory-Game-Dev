@@ -3,14 +3,17 @@ import { useState } from "react";
 import RoomForm from "../roomForm";
 import ButtonLink from "../buttonLink";
 import "./coopRoom.css";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 const CoopRoom = () => {
-  const [isAuth] = useState<string | null>(localStorage.getItem("token") || null);
-  const [userId] = useState<string | null>(localStorage.getItem("userId"));
+  const [isAuth] = useState<string | null>(cookies.get("token") || null);
+  const [userId] = useState<string | null>(cookies.get("userId"));
 
   return (
     <div className="coopRoom">
-      <h1>Cooperativo</h1>
+      <h1 id="coopTitle">Cooperativo</h1>
       {isAuth && userId? (
           <RoomForm />
       ) : (
@@ -18,7 +21,6 @@ const CoopRoom = () => {
           <p>Faça login primeiro</p>
           <ButtonLink buttontext="Voltar" to="/"></ButtonLink>
         </div>
-        
       )}
       
     </div>

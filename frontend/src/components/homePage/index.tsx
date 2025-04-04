@@ -4,10 +4,12 @@ import './HomePage.css'
 import { useEffect, useState } from 'react';
 import ProfilePic from "../../assets/geniusLogo.svg"
 import LogoutPic from "../../assets/logout.svg"
+import Cookies from 'universal-cookie'
 
+const cookies = new Cookies();
 const Home = () => {
-	var token = localStorage.getItem('token');
-	var userId = localStorage.getItem('userId');
+	var token = cookies.get('token');
+	var userId = cookies.get('userId');
 	var [logged, setLogged] = useState(false)
 
 	useEffect(() => {
@@ -15,7 +17,10 @@ const Home = () => {
 			setLogged(true)
 		}
 	}, [logged])
-
+	const clearAuthCookies = (): void => {
+		cookies.remove("token", { path: "/" });
+		cookies.remove("userId", { path: "/" });
+	};
 
 	return (
 		<div className="HomePage">
@@ -23,7 +28,7 @@ const Home = () => {
 				<div className='HomePage-Profile'>
 					<img src={ProfilePic} />
 					<div className='HomePage-Profile-Buttons'>
-						<button onClick={() => { localStorage.clear(), window.location.reload() }}>
+						<button onClick={() => { clearAuthCookies(); window.location.reload(); }}>
 							<img src={LogoutPic} alt="" />
 							Sair da conta
 						</button>
