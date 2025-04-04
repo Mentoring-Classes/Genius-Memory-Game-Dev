@@ -14,7 +14,7 @@ const CreateUser = () => {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:3000/user/register', {
+      await axios.post('https://genius-node-api.onrender.com/user/register', {
         email,
         password,
       });
