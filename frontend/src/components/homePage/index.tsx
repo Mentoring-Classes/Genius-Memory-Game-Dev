@@ -18,8 +18,8 @@ const Home = () => {
 		}
 	}, [logged])
 	const clearAuthCookies = (): void => {
-		cookies.remove("token", { path: "/" });
-		cookies.remove("userId", { path: "/" });
+		cookies.remove("token", { path: "/Genius-Memory-Game" });
+		cookies.remove("userId", { path: "/Genius-Memory-Game" });
 	};
 
 	return (

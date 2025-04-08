@@ -19,7 +19,7 @@ const loginPage = () => {
 		e.preventDefault();
 
 		try {
-			const response = await axios.post('https://genius-node-api.onrender.com/user/login', {
+			const response = await axios.post(`${import.meta.env.VITE_API_URL}user/login`, {
 				email,
 				password,
 			});
