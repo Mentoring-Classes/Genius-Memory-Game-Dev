@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import './roomForm.css'
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import './roomForm.css';
 
 const RoomForm = () => {
 	const [roomName, setRoomName] = useState('');
@@ -46,7 +46,7 @@ const RoomForm = () => {
 				</p>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default RoomForm
+export default RoomForm;

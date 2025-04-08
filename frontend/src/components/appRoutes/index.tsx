@@ -11,7 +11,7 @@ const AppRoutes: React.FC = () => {
 		<Routes>
 			<Route path="/" element={<Home />} />
 			<Route path="*" element={<NotFound />} />
-			<Route path="/register" element={<CreateUser/>} />
+			<Route path="/register" element={<CreateUser />} />
 			<Route path="/login" element={<LoginPage />} />
 			<Route path="/soloGame" element={<SoloGame />} />
 			<Route path="/coop" element={<CoopRoom />} />
