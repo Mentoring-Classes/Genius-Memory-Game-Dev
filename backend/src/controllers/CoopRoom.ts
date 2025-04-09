@@ -1,11 +1,12 @@
 import CoopRoom from "../models/CoopRoom";
-import { Request, Response } from 'express';
+import { Response } from 'express';
+import { AuthenticatedRequest } from '../middlewares/authMiddleware';
 
-export const createRoom = async (req: Request, res: Response) => {
-  const { roomName, player1 } = req.body;
+export const createRoom = async (req: AuthenticatedRequest, res: Response) => {
+  const { roomName } = req.body;
 
-  if (!roomName || !player1) {
-    return res.status(422).json({ msg: "Faltando o nome da sala ou do jogador 1" });
+  if (!roomName) {
+    return res.status(422).json({ msg: "Faltando o nome da sala" });
   }
 
   const roomExists = await CoopRoom.findOne({ roomName });
@@ -16,7 +17,7 @@ export const createRoom = async (req: Request, res: Response) => {
 
   const room = new CoopRoom({
     roomName,
-    player1,
+    player1: req.user.userName,
     player2: null,
   });
 

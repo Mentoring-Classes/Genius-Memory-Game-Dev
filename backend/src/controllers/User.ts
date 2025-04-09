@@ -66,7 +66,7 @@ export const login = async  (req: Request, res: Response) => {
     const secret = process.env.SECRET_KEY as string;
 
     const token = jwt.sign(
-      { id: user._id },
+      { id: user._id, userName: user.userName },
       secret
     );    
     res.status(200).json({
