@@ -13,7 +13,7 @@ export const RANK_MESSAGES = {
 
 export const USER_MESSAGES = {
     EMAIL_ALREADY_EXISTS: 'Email already exists',
-    EMAIL_AND_PASSWORD_REQUIRED: 'Email and password are required',
+    EMAIL_AND_PASSWORD_AND_USERNAME_REQUIRED: 'Email, password, and user name are required',
     USER_SAVED_SUCCESSFULLY: 'User saved successfully',
     ERROR_SAVING_USER: 'Error saving user',
     USER_NOT_FOUND: 'User not found',

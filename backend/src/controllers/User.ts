@@ -6,10 +6,10 @@ import { USER_MESSAGES, RANK_MESSAGES } from '../consts/Messages';
 import jwt from 'jsonwebtoken';
 
 export const create = async (req: Request, res: Response) => {
-  const { email, password } = req.body
+  const { email, password, userName } = req.body
 
-  if (!email && !password) {
-    return res.status(422).json({ msg: USER_MESSAGES.EMAIL_AND_PASSWORD_REQUIRED })
+  if (!email && !password && !userName) {
+    return res.status(422).json({ msg: USER_MESSAGES.EMAIL_AND_PASSWORD_AND_USERNAME_REQUIRED })
   }
 
   const userExist = await User.findOne({ email: email })
@@ -20,6 +20,7 @@ export const create = async (req: Request, res: Response) => {
   const defaultRank = await Rank.findOne({ rank: "Bronze" });
 
   const user = new User({
+    userName: userName,
     email: email,
     password: password,
     rank: defaultRank?._id
