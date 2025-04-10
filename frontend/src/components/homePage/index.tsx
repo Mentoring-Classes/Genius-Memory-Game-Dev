@@ -1,38 +1,12 @@
 import 'intro.js/introjs.css';
 import ButtonLink from '../buttonLink';
 import './HomePage.css';
-import { useEffect, useState } from 'react';
 import ProfilePic from '../../assets/geniusLogo.svg';
 import LogoutPic from '../../assets/logout.svg';
-import Cookies from 'universal-cookie';
-import axios from 'axios';
+import { useAuth } from '../../hooks/useAuth';
 
-const cookies = new Cookies();
 const Home = () => {
-	var [logged, setLogged] = useState(false);
-	var [userName, setUserName] = useState(false);
-
-	useEffect(() => {
-		const token = cookies.get('token');
-
-		axios.get('http://localhost:3000/verify-token', {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		})
-		.then((res) => {
-			setLogged(true);
-			setUserName(res.data.user.userName);
-		})
-		.catch((err) => {
-			console.error("Token inválido ou erro na verificação:", err);
-			clearAuthCookies();
-			setLogged(false);
-		});
-	}, []);
-	const clearAuthCookies = () => {
-		cookies.remove('token', { path: '/' });
-	};
+	const { logged, userName, logout } = useAuth();
 
 	return (
 		<div className="HomePage">
@@ -44,8 +18,7 @@ const Home = () => {
 					<p id='logged'>{userName}</p>
 						<button
 							onClick={() => {
-								clearAuthCookies();
-								window.location.reload();
+								logout();
 							}}
 						>
 							<img src={LogoutPic} alt="" />

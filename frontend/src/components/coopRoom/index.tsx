@@ -8,12 +8,11 @@ const cookies = new Cookies();
 
 const CoopRoom = () => {
 	const [isAuth] = useState<string | null>(cookies.get('token') || null);
-	const [userId] = useState<string | null>(cookies.get('userId'));
 
 	return (
 		<div className="coopRoom">
 			<h1 id="coopTitle">Cooperativo</h1>
-			{isAuth && userId ? (
+			{isAuth ? (
 				<RoomForm />
 			) : (
 				<div className="notLoggedIn">
