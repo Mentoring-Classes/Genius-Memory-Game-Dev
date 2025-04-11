@@ -1,4 +1,3 @@
-// src/hooks/useAuth.ts
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -14,7 +13,7 @@ export const useAuth = () => {
 
     if (!token) return;
 
-    axios.get('http://localhost:3000/verify-token', {
+    axios.get(`${import.meta.env.VITE_API_URL}verify-token`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

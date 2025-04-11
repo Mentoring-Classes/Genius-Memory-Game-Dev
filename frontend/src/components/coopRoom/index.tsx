@@ -1,18 +1,15 @@
-import { useState } from 'react';
 import RoomForm from '../roomForm';
 import ButtonLink from '../buttonLink';
 import './coopRoom.css';
-import Cookies from 'universal-cookie';
-
-const cookies = new Cookies();
+import { useAuth } from '../../hooks/useAuth';
 
 const CoopRoom = () => {
-	const [isAuth] = useState<string | null>(cookies.get('token') || null);
+	const { logged } = useAuth();
 
 	return (
 		<div className="coopRoom">
 			<h1 id="coopTitle">Cooperativo</h1>
-			{isAuth ? (
+			{logged ? (
 				<RoomForm />
 			) : (
 				<div className="notLoggedIn">

@@ -4,6 +4,6 @@ import { authMiddleware } from '../middlewares/authMiddleware';
 
 const router = Router();
 
-router.post('/coopRoom', authMiddleware,(req: Request, res: Response) => { createRoom(req, res); });
+router.post('/coopRoom/create', authMiddleware,(req: Request, res: Response) => { createRoom(req, res); });
 
 export default router;
