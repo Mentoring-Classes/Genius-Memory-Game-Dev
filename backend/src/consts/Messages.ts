@@ -22,3 +22,10 @@ export const USER_MESSAGES = {
     USER_DELETED_SUCCESSFULLY: 'User deleted successfully',
     ERROR_DELETING_USER: 'Error deleting user',
 }
+
+export const COOP_ROOM_MESSAGES = {
+    ROOM_ALREADY_EXISTS: 'Room already exists',
+    ROOM_SAVED_SUCCESSFULLY: 'User saved successfully',
+    ERROR_SAVING_ROOM: 'Error saving user',
+    ROOM_NAME_REQUIRED: 'Room name are required',
+}

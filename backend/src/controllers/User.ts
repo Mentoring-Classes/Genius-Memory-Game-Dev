@@ -2,7 +2,7 @@ import User from "../models/User";
 import Rank from "../models/Rank";
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
-import { USER_MESSAGES, RANK_MESSAGES } from '../consts/Messages';
+import { USER_MESSAGES } from '../consts/Messages';
 import jwt from 'jsonwebtoken';
 
 export const create = async (req: Request, res: Response) => {
