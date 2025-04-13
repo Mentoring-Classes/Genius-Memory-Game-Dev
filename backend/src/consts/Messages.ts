@@ -25,7 +25,11 @@ export const USER_MESSAGES = {
 
 export const COOP_ROOM_MESSAGES = {
     ROOM_ALREADY_EXISTS: 'Room already exists',
-    ROOM_SAVED_SUCCESSFULLY: 'User saved successfully',
-    ERROR_SAVING_ROOM: 'Error saving user',
+    ROOM_SAVED_SUCCESSFULLY: 'Room saved successfully',
+    ERROR_SAVING_ROOM: 'Error saving Room',
     ROOM_NAME_REQUIRED: 'Room name are required',
+    ROOM_NOT_FOUND: 'Room not found',
+    ROOM_ALREADY_FULL: 'Room is already full',
+    JOIN_ROOM_SUCCESS: 'Joined room successfully',
+    ERROR_JOINING_ROOM: 'Error joining room',
 }
