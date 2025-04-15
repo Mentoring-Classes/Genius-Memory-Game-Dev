@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  title: Genius Memory Game API
+  description: Documentação das rotas do Genius Memory Game
+  version: 1.0.0
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 60b8d295f1e7c80015b45a3c
+        userName:
+          type: string
+          example: Eduardo
+        email:
+          type: string
+          example: Edu@gmail.com
+        bestScore:
+          type: number
+          example: 0
+        rankPoints:
+          type: number
+          example: 0
+        rank:
+          type: string
+          example: 67d465556623585054c0fb8b
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-04-13T03:49:41.996Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2025-04-13T03:49:41.996Z
+
+
+paths:
+  /user/register:
+    post:
+      summary: Registra um novo usuário
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userName:
+                  example: Eduardo
+                email:
+                  example: Edu@gmail.com
+                password:
+                  exampe: senhaDoEdu
+                  
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/User'
+
+  /user/{id}:
+    get:
+      summary: Pega os dados do usuário
+      tags: [Users]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do usuário
+          
+      responses:
+        '200':
+          description: Usuário retornado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Usuário não encontrado
+        '500':
+          description: Erro no servidor
+
+    delete:
+      summary: Deleta um usuário
+      tags: [Users]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do usuário
+             
+      responses:
+        '200':
+          description: Usuário retornado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    example: User deleted successfully
+        '404':
+          description: Usuário não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    example: User not found
+    patch:
+      summary: Atualiza os dados do usuário
+      tags: [Users]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do usuário
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userName:
+                  example: Novo Eduardo
+                email:
+                  example: NovoEmailDoEdu@gmail.com
+             
+      responses:
+        '200':
+          description: Usuário atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                properties:
+                  userName:
+                    type: string
+                    example: Novo Eduardo
+                  email:
+                    type: string
+                    example: NovoEmailDoEdu@gmail.com
+        '404':
+          description: Usuário não encontrado
+        '500':
+          description: Erro no servidor
+
+  /rank:
+    get:
+      summary: Lista o rank dos usuários
+      tags: [Rank]
+      responses:
+        '200':
+          description: Lista de ranks
