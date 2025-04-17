@@ -35,7 +35,11 @@ components:
           type: string
           format: date-time
           example: 2025-04-13T03:49:41.996Z
-
+  securitySchemes: 
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
 
 paths:
   /user/register:
@@ -47,7 +51,6 @@ paths:
         content:
           application/json:
             schema:
-              type: object
               properties:
                 userName:
                   example: Eduardo
@@ -63,6 +66,40 @@ paths:
             application/json:
               schema:
                   $ref: '#/components/schemas/User'
+
+  /user/login:
+      post:
+        summary: Faz Login do usuário
+        tags: [Users]
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    example: Edu@gmail.com
+                  password:
+                    exampe: senhaDoEdu
+        responses:
+          '201':
+            description: Login realizado com sucesso
+            content:
+              application/json:
+                schema:
+                  properties:
+                    userName:
+                      example: Login feito com sucesso
+                    token:
+                      example: LWDgMOa9SOOJ92haojf3A123W4OvsDap10vjbn20cm18
+          '422':
+            description: Senha ou email inválido
+            content:
+              application/json:
+                schema:
+                  properties:
+                    msg:
+                      example: Invalid email or password
 
   /user/{id}:
     get:
@@ -101,7 +138,6 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 properties:
                   msg:
                     example: User deleted successfully
@@ -110,7 +146,6 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 properties:
                   msg:
                     example: User not found
@@ -127,7 +162,6 @@ paths:
         content:
           application/json:
             schema:
-              type: object
               properties:
                 userName:
                   example: Novo Eduardo
@@ -142,20 +176,162 @@ paths:
               schema:
                 properties:
                   userName:
-                    type: string
                     example: Novo Eduardo
                   email:
-                    type: string
                     example: NovoEmailDoEdu@gmail.com
         '404':
           description: Usuário não encontrado
         '500':
           description: Erro no servidor
 
-  /rank:
-    get:
-      summary: Lista o rank dos usuários
-      tags: [Rank]
+  /coopRoom/create:
+    post:
+      summary: Cria uma nova sala cooperativa
+      tags: [CoopRoom]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                roomName:
+                  example: sala111222
       responses:
         '200':
-          description: Lista de ranks
+          description: Sala criada com sucesso
+          content:
+            application/json:
+              schema:
+                properties:
+                  _id:
+                    example: 01d23abc4vf5ad6def78a9ghi012jadkl
+                  roomName:
+                    example: sala111222
+                  player1:
+                    example: ola_user_name
+                  player2:
+                    nullable: true
+                    example: null
+        '401':
+          description: Não autorizado – Token inválido
+          content:
+            application/json:
+              schema:
+              
+              examples:
+                invalid_token:
+                  summary: token invalido
+                  value:
+                    msg: Token inválido
+                token_Error:
+                  summary: token não fornecido
+                  value:
+                    msg: Acesso negado token não fornecido.
+        '422':
+          description: Erro de validação – Nome da sala inválido
+          content:
+            application/json:
+              schema:
+                properties:
+                  msg:
+                    example: Nome da sala inválido
+              examples:
+                nome_ja_existe:
+                  summary: Nome já existe
+                  value:
+                    msg: Room name already exists
+                nome_obrigatorio:
+                  summary: Nome obrigatório
+                  value:
+                    msg: Room name is required
+
+  /coopRoom/{id}:
+    get:
+      summary: Pega os dados de uma sala cooperativa
+      tags: [CoopRoom]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID da sala
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Retorna a sala com sucesso
+          content:
+            application/json:
+              schema:
+                properties:
+                  _id:
+                    example: 67faa7ab481b2753c7593042
+                  roomName:
+                    example: sala111222
+                  player1:
+                    example: ola_user_name
+                  player2:
+                    nullable: true
+                    example: null
+        '401':
+          description: Não autorizado – Token inválido
+          content:
+            application/json:           
+              examples:
+                invalid_token:
+                  summary: token invalido
+                  value:
+                    msg: Token inválido
+  
+  /coopRoom/join:
+    patch:
+      summary: Entra em uma sala cooperativa
+      tags: [CoopRoom]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                roomName:
+                  example: sala111222
+      responses:
+        '200':
+          description: Mostra a sala com sucesso
+          content:
+            application/json:
+              schema:
+                properties:
+                  _id:
+                    example: 01d23abc4vf5ad6def78a9ghi012jadkl
+                  roomName:
+                    example: sala111222
+                  player1:
+                    example: ola_user_name
+                  player2:
+                    nullable: true
+                    example: null
+        '401':
+          description: Erro de validação – Nome da sala inválido
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  summary: token invalido
+                  value:
+                    msg: Token inválido
+                token_Error:
+                  summary: token não fornecido
+                  value:
+                    msg: Acesso negado token não fornecido.
+        '404':
+          description: Sala não encontrada
+          content:
+            application/json:
+              schema:
+                properties:
+                  msg:
+                    example: Sala não encontrada
