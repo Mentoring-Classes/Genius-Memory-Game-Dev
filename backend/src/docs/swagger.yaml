@@ -184,6 +184,37 @@ paths:
         '500':
           description: Erro no servidor
 
+  /verify-token:
+    get:
+      summary: Verifica o token do usuário
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Token verificado com sucesso
+          content:
+            application/json:
+              example:
+                valid: true
+                user:
+                  id: oev91bc9bmhs810f0za1b
+                  userName: Eduardo
+                  iat: 1744302058
+        '401':
+          description: Token inválido
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  summary: Se o token for inválido
+                  value:
+                    msg: Token inválido
+                tokenNãoFornecido:
+                  summary: Se o token não for fornecido
+                  value:
+                    msg: Acesso negado token não fornecido
+                
   /coopRoom/create:
     post:
       summary: Cria uma nova sala cooperativa
@@ -335,3 +366,165 @@ paths:
                 properties:
                   msg:
                     example: Sala não encontrada
+
+  /rank:
+    post:
+      summary: Cria todos os ranks necessários
+      tags: [Rank]
+      responses:
+        '200':
+          description: Ranks Criados com sucesso
+          content:
+            application/json:
+              schema:
+                properties:
+                  msg:
+                    example: Ranks created successfully
+        '500':
+          description: Erro no servidor
+          content:
+            application/json:
+              schema:
+                properties:
+                  msg:
+                    example: Rank Bronze already exists
+  /rank/{id}:
+    get:
+      summary: Retorna um rank pelo ID
+      tags: [Rank]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID do rank
+      responses:
+        '200':
+          description: Rank retornado com sucesso
+          content:
+            application/json:
+              schema:
+                properties:
+                  _id:
+                    example: 02jf02jjd17vblaov91hxb1zmbvd
+                  rank:
+                    example: Silver
+                  requiredPoints:
+                    example: 600
+                  nextRank:
+                    example: Gold
+        '404':
+          description: Rank não encontrado
+          content:
+            application/json:
+              schema:
+                properties:
+                  msg:
+                    example: Rank not found
+    delete:
+      summary: Retorna um rank pelo ID
+      tags: [Rank]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID do rank
+      responses:
+        '200':
+          description: Rank retornado com sucesso
+          content:
+            application/json:
+              example:
+                msg: Rank deleted successfully
+        '404':
+          description: Cannot DELETE /rank/
+    patch:
+      summary: Atualiza um rank pelo ID
+      tags: [Rank]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+          description: ID do rank
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                rank:
+                  example: Gold
+                requiredPoints:
+                  example: 2000
+      responses:
+        '200':
+          description: Rank atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                properties:
+                  _id:
+                    example: 02jf02jjd17vblaov91hxb1zmbvd
+                  rank:
+                    example: Gold
+                  requiredPoints:
+                    example: 2000
+                  nextRank:
+                    example: Platinum
+        '404':
+          description: Rank não encontrado
+          content:
+            application/json:
+              schema:
+                properties:
+                  msg:
+                    example: Rank not found
+  /user/:id/rank:
+    patch:
+      summary: Atualiza o rankPoints do usuário pelo ID
+      tags: [Rank, Users]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+          description: ID do usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                rankPoints:
+                  example: 100
+      responses:
+        '200':
+          description: Rank retornado com sucesso
+          content:
+            application/json:
+              example:
+                msg: Rank updated successfully
+        '404':
+          description: Rank não encontrado
+          content:
+            application/json:
+              schema:
+                properties:
+                  msg:
+                    example: Rank not found
+        '500':
+          content:
+            application/json:
+              examples:
+                RankPoints_erro:
+                  summary: Se tentar colocar um rankPoints maior que o permitido
+                  value:
+                    msg: Error fetching rank
+                UserInvalid:
+                  summary: Se o usuário não existir
+                  value:
+                    msg: Error updating rank.
